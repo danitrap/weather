@@ -10,7 +10,9 @@
           />
         </div>
       </div>
-      <b-skeleton :active="weatherData.length === 0" />
+      <div class="buttons">
+        <b-button type="is-primary" expanded @click="getWeather">Aggiorna</b-button>
+      </div>
     </div>
   </section>
 </template>
@@ -28,11 +30,20 @@ export default {
     };
   },
   created() {
-    this.cities.forEach(city => {
-      Weather.getFor(city).then(weather => {
-        this.weatherData.push(weather.data);
+    this.getWeather();
+  },
+  methods: {
+    getWeather() {
+      this.cities.forEach(city => {
+        this.weatherData = [];
+        Weather.getFor(city).then(weather => {
+          this.weatherData.push(weather.data);
+        });
       });
-    });
+    }
+  },
+  computed: {
+    isLoading: () => this.weatherData.length === 0
   }
 };
 </script>

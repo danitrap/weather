@@ -5,8 +5,8 @@
       <article class="media">
         <div class="media-content">
           <div class="content has-text-centered">
-            <p class="is-size-1">{{ temp | formatTemp }}</p>
-            <p class="is-size-6">{{ description | capitalizeFirst }}</p>
+            <h1 class="title is-1">{{ temp | formatTemp }}</h1>
+            <p class="subtitle">{{ description | capitalizeFirst }}</p>
           </div>
         </div>
       </article>
