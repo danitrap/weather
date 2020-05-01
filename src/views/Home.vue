@@ -13,6 +13,9 @@
       <div class="buttons">
         <b-button type="is-primary" expanded @click="getWeather">Aggiorna</b-button>
       </div>
+      <div
+        class="is-italic has-text-centered has-text-white"
+      >Ultimo aggiornamento {{ lastUpdatedTime }}</div>
     </div>
   </section>
 </template>
@@ -26,7 +29,8 @@ export default {
   data: () => {
     return {
       cities: ["Palermo", "Milano"],
-      weatherData: []
+      weatherData: [],
+      lastUpdate: new Date()
     };
   },
   created() {
@@ -40,10 +44,14 @@ export default {
           this.weatherData.push(weather.data);
         });
       });
+      this.lastUpdate = new Date();
     }
   },
   computed: {
-    isLoading: () => this.weatherData.length === 0
+    isLoading: () => this.weatherData.length === 0,
+    lastUpdatedTime() {
+      return this.lastUpdate.toLocaleTimeString();
+    }
   }
 };
 </script>
