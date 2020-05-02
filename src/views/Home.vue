@@ -1,6 +1,7 @@
 <template>
   <section class="section is-fullheight">
     <div class="container">
+      <div class="title has-text-centered">{{ today }}</div>
       <div class="columns is-mobile">
         <div class="column" v-for="city in weatherData" :key="city.id">
           <city-widget
@@ -51,7 +52,8 @@ export default {
     isLoading: () => this.weatherData.length === 0,
     lastUpdatedTime() {
       return this.lastUpdate.toLocaleTimeString();
-    }
+    },
+    today: () => new Date().toLocaleDateString()
   }
 };
 </script>
