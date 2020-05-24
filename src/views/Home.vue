@@ -2,16 +2,17 @@
   <section class="section is-fullheight">
     <div class="container">
       <div class="title has-text-centered">{{ today }}</div>
-      <div class="columns is-mobile">
-        <div class="column" v-for="city in weatherData" :key="city.id">
-          <city-widget
-            :city="city.name"
-            :temp="city.main.temp"
-            :description="city.weather[0].description"
-          />
-        </div>
+      <div class="widgets">
+        <city-widget
+          v-for="city in weatherData"
+          :key="city.id"
+          :city="city.name"
+          :temp="city.main.temp"
+          :description="city.weather[0].description"
+          :icon="city.weather[0].icon"
+        />
       </div>
-      <div class="buttons">
+      <div class="buttons" v-if="shouldUpdate">
         <b-button type="is-primary" expanded @click="getWeather">Aggiorna</b-button>
       </div>
       <div
@@ -27,7 +28,7 @@ import Weather from "@/services/Weather";
 export default {
   name: "Home",
   components: { CityWidget },
-  data: () => {
+  data() {
     return {
       cities: ["Palermo", "Milano"],
       weatherData: [],
@@ -53,7 +54,10 @@ export default {
     lastUpdatedTime() {
       return this.lastUpdate.toLocaleTimeString();
     },
-    today: () => new Date().toLocaleDateString()
+    today: () => new Date().toLocaleDateString(),
+    shouldUpdate() {
+      return new Date().getHours() - this.lastUpdate.getHours() !== 0;
+    }
   }
 };
 </script>
@@ -68,5 +72,11 @@ export default {
   background-size: cover;
   background-position: bottom;
   height: 100vh;
+}
+
+.widgets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
