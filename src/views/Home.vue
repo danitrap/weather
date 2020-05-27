@@ -2,57 +2,29 @@
   <main class="section is-fullheight">
     <div class="container app">
       <div class="title has-text-centered primary-heading">{{ today }}</div>
-      <div class="cities">
-        <city-widget
-          v-for="city in weatherData"
-          :key="city.id"
-          :city="city.name"
-          :temp="city.main.temp"
-          :description="city.weather[0].description"
-          :icon="city.weather[0].icon"
-        />
-      </div>
+      <weather-widget :cities="cities" class="weather" />
       <quotes-widget class="quotes" />
     </div>
   </main>
 </template>
 
 <script>
-import CityWidget from "@/components/CityWidget.vue";
+import WeatherWidget from "@/components/WeatherWidget.vue";
 import QuotesWidget from "@/components/QuotesWidget.vue";
-import Weather from "@/services/Weather";
 export default {
   name: "Home",
-  components: { CityWidget, QuotesWidget },
+
+  components: { WeatherWidget, QuotesWidget },
+
   data() {
     return {
-      cities: ["Palermo", "Milano"],
-      weatherData: [],
-      lastUpdate: new Date()
+      cities: ["Palermo", "Milano"]
     };
   },
-  created() {
-    this.getWeather();
-  },
-  methods: {
-    getWeather() {
-      this.cities.forEach(city => {
-        this.weatherData = [];
-        Weather.getFor(city).then(weather => {
-          this.weatherData.push(weather.data);
-        });
-      });
-      this.lastUpdate = new Date();
-    }
-  },
+
   computed: {
-    isLoading: () => this.weatherData.length === 0,
-    lastUpdatedTime() {
-      return this.lastUpdate.toLocaleTimeString();
-    },
-    today: () => new Date().toLocaleDateString(),
-    shouldUpdate() {
-      return new Date().getHours() - this.lastUpdate.getHours() !== 0;
+    today() {
+      return new Date().toLocaleDateString();
     }
   }
 };
@@ -74,12 +46,6 @@ export default {
   display: flex;
   flex-direction: column;
   height: 80vh;
-}
-
-.cities {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .quotes {

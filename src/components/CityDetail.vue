@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "CityWidget",
+  name: "CityDetail",
   props: {
     city: String,
     temp: Number,
