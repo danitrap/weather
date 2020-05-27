@@ -1,5 +1,5 @@
 <template>
-  <blockquote class="is-italic has-text-centered has-text-white" @click="fetchRandomQuote">
+  <blockquote class="is-italic has-text-centered has-text-white" @click="$emit('click')">
     <p>{{ quote }}</p>
     <p>&mdash; {{ author }}</p>
   </blockquote>
@@ -23,6 +23,7 @@ export default {
       this.quote = data.contents.quotes[0].quote;
       this.author = data.contents.quotes[0].author;
     },
+    // @deprecated
     async fetchRandomQuote() {
       const { data } = await Quotes.fetchRandom();
 

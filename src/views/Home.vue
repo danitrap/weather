@@ -1,9 +1,12 @@
 <template>
   <main class="section is-fullheight">
     <div class="container app">
-      <div class="title has-text-centered primary-heading">{{ today }}</div>
+      <div class="title has-text-centered primary-heading">
+        {{ today }}
+        <span>{{ easterEgg }}</span>
+      </div>
       <weather-widget :cities="cities" class="weather" />
-      <quotes-widget class="quotes" />
+      <quotes-widget class="quotes" @click="easterEgg = '🤓'" />
     </div>
   </main>
 </template>
@@ -18,6 +21,7 @@ export default {
 
   data() {
     return {
+      easterEgg: "",
       cities: ["Palermo", "Milano"]
     };
   },
@@ -64,5 +68,13 @@ export default {
   -webkit-text-fill-color: transparent;
   text-fill-color: transparent;
   text-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+  span {
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    -webkit-text-fill-color: initial;
+    text-fill-color: initial;
+  }
 }
 </style>
